@@ -48,3 +48,7 @@ class Total(Standard):
     position = ForeignKeyField(Position)
     precipitation = ForeignKeyField(Precipitation)
     date = DateField()
+
+
+TABLES = [Area, Position, PrecipitationType, Precipitation, Total]
+db.create_tables(TABLES)
