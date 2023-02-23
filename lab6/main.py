@@ -18,25 +18,24 @@ class MyWebService:
                 <title>lab6</title>
             </head>
             <body>
-                <form method="POST" action="/change_table">
-                <input type="submit" name="table" value=Area>
-                <input type="submit" name="table" value=Position>
-                <input type="submit" name="table" value=PrecipitationType>
-                <input type="submit" name="table" value=Precipitation>
-                <input type="submit" name="table" value=Total>
-                </form>
-                
-                <h1>{0}</h1>
-                <table border="1" width="600" style="border-collapse:collapse;">
-                {1}
-                </table>
-                <form method="POST" action="/apply">
-                {2}
-                <input id="cb" type="checkbox" name="is_del">
-                <label for="cb">Delete</label>
-                <input type="submit" value=Submit>
-                </form>
-
+                    <form method="POST" action="/change_table">  <!-- Кнопки переключения таблиц -->
+                        <input type="submit" name="table" value=Area>
+                        <input type="submit" name="table" value=Position>
+                        <input type="submit" name="table" value=PrecipitationType>
+                        <input type="submit" name="table" value=Precipitation>
+                        <input type="submit" name="table" value=Total>
+                    </form>
+                    
+                    <h1>{0}</h1>  <!-- Имя таблицы -->
+                    
+                    <table border="1" width="600" style="border-collapse:collapse; margin-bottom:20px;">  <!-- Таблица -->
+                        {1}
+                    </table>
+                    <form method="POST" action="/apply">  <!-- Поле ввода -->
+                        {2}
+                        <input id="cb" type="checkbox" name="is_del"><label for="cb">Delete</label>
+                        <input type="submit" value=Apply>
+                    </form>
             </body>
             </html>
         """).format(self.table.__name__, objects, edit_form)
