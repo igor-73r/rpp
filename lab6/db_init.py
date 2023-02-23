@@ -50,5 +50,23 @@ class Total(Standard):
     date = DateField()
 
 
+def get_fields(table):
+    return table._meta.fields.keys()
+
+
+def table_getter(table):
+    match table:
+        case "Area":
+            return Area
+        case "Position":
+            return Position
+        case "Precipitation":
+            return Precipitation
+        case "PrecipitationType":
+            return PrecipitationType
+        case "Total":
+            return Total
+
+
 TABLES = [Area, Position, PrecipitationType, Precipitation, Total]
 db.create_tables(TABLES)
