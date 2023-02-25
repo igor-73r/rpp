@@ -8,7 +8,6 @@ class MyWebService:
 
     @cherrypy.expose
     def index(self):
-        print(self.table)
         objects = get_data(self.table)
         edit_form = build_form(self.table)
 
@@ -45,21 +44,19 @@ class MyWebService:
     def apply(self, **kwargs):
         print(self.table, kwargs)
         if not kwargs.get('is_del'):
-            if kwargs.get('id'):
+            if kwargs.get('id'):  # Редактирование
                 item = kwargs.get('id')
                 kwargs.pop('id')
                 for k, v in list(kwargs.items()):
                     if v == '':
                         kwargs.pop(k)
                 self.table.update(kwargs).where(self.table.id == item).execute()
-                raise cherrypy.HTTPRedirect('/')
-            else:
+            else:  # Добавление
                 kwargs.pop('id')
                 self.table.insert(kwargs).execute()
-                raise cherrypy.HTTPRedirect('/')
-        else:
+        else:  # Удаление
             self.table.delete().where(self.table.id == kwargs['id']).execute()
-            raise cherrypy.HTTPRedirect('/')
+        raise cherrypy.HTTPRedirect('/')
 
 
     @cherrypy.expose
@@ -78,7 +75,6 @@ def get_data(table):
 def build_form(table):
     res = ""
     names = get_fields(table)
-    print(names)
     for i in names:
         res += f'<input type="text" name="{i}" placeholder="{i}">'
     return res
@@ -86,4 +82,3 @@ def build_form(table):
 
 if __name__ == '__main__':
     cherrypy.quickstart(MyWebService())
-    # build_form(Precipitation)
