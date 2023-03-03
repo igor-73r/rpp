@@ -5,9 +5,6 @@ def timestamp_to_date(timestamp, gmt=0):
         else:
             return False
 
-    def timestamp_to_date_format(values):
-        return "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}".format(*values)
-
     in_minute = 60
     in_hour = in_minute * 60
     in_day = in_hour * 24
@@ -33,9 +30,9 @@ def timestamp_to_date(timestamp, gmt=0):
 
     res = (year, month, day, hour, minute, timestamp)
 
-    return timestamp_to_date_format(res)
+    return "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}".format(*res)
 
 
 if __name__ == '__main__':
-    check = 1777777777
+    check = int(input("Введите значение: "))
     print(timestamp_to_date(check, gmt=4))
