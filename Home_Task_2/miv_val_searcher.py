@@ -11,5 +11,5 @@ def min_val_2(array):
 
 if __name__ == '__main__':
     arr = list(map(int, input("Введите массив: ").split()))
-    print(min_val_1(arr))
-    print(min_val_2(arr))
+    print(min_val_1(arr))  # O(n)
+    print(min_val_2(arr))  # O(n)
