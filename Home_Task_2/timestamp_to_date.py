@@ -5,6 +5,7 @@ def timestamp_to_date(timestamp, gmt=0):
         else:
             return False
 
+    gmt_tag = ''
     in_minute = 60
     in_hour = in_minute * 60
     in_day = in_hour * 24
@@ -12,6 +13,10 @@ def timestamp_to_date(timestamp, gmt=0):
 
     if gmt > 0:
         timestamp += gmt * in_hour
+        gmt_tag = f'GMT+{gmt}'
+    elif gmt < 0:
+        timestamp -= gmt * in_hour
+        gmt_tag = f'GMT-{gmt}'
 
     year = 1970
     month = 1
@@ -31,11 +36,11 @@ def timestamp_to_date(timestamp, gmt=0):
     minute = (timestamp % in_hour) // in_minute
     timestamp %= in_minute
 
-    res = (year, month, day, hour, minute, timestamp)
+    res = (year, month, day, hour, minute, timestamp, gmt_tag)
 
-    return "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d}".format(*res)
+    return "{:04d}-{:02d}-{:02d} {:02d}:{:02d}:{:02d} {}".format(*res)
 
 
 if __name__ == '__main__':
     check = int(input("Введите значение: "))
-    print(timestamp_to_date(check, gmt=4))
+    print(timestamp_to_date(check))
