@@ -8,7 +8,10 @@ def timestamp_to_date(timestamp, gmt=0):
     in_minute = 60
     in_hour = in_minute * 60
     in_day = in_hour * 24
-    in_year = 365
+    in_year = 365 * in_day
+
+    if gmt > 0:
+        timestamp += gmt * in_hour
 
     year = 1970
     month = 1
@@ -24,7 +27,7 @@ def timestamp_to_date(timestamp, gmt=0):
         month += 1
 
     day = timestamp // in_day + 1
-    hour = (timestamp % in_day) // in_hour + gmt
+    hour = (timestamp % in_day) // in_hour
     minute = (timestamp % in_hour) // in_minute
     timestamp %= in_minute
 
