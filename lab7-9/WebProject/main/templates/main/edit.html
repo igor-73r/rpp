@@ -1,0 +1,12 @@
+{% load widget_tweaks %}
+<form method="POST">
+    {% csrf_token %}
+    {% for i in form %}
+    {% if i.name == 'date' %}
+    <p>{{i.name}} {% render_field i placeholder='YYYY-MM-DD' %}</p>
+    {% else %}
+    <p>{{i.name}} {{i}}</p>
+    {% endif %}
+    {% endfor %}
+    <input type="submit" value="Сохранить изменения" class="save-button" name="Create User">
+</form>

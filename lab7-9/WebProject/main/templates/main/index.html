@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>lab6</title>
+</head>
+<body>
+        <form method="POST" action="/change_table/">  <!-- Кнопки переключения таблиц -->
+            {% csrf_token %}
+            <input type="submit" name="Area" value=Area>
+            <input type="submit" name="Pos" value=Position>
+            <input type="submit" name="Type" value=PrecipitationType>
+            <input type="submit" name="Prec" value=Precipitation>
+            <input type="submit" name="Total" value=Total>
+        </form>
+
+        <h1>{{table_name}}</h1>  <!-- Имя таблицы -->
+
+        <table border="1" width="600" style="border-collapse:collapse; margin-bottom:20px;">  <!-- Таблица -->
+            <tr>
+                {% for field in fields_name %}
+                <th>{{ field }}</th>
+                {% endfor %}
+            </tr>
+            {% for item in query_results %}
+                <tr>
+                    <th>{{ item.id }}</th>
+                    {% if table_name == "Area" %}
+                        <th>{{ item.width }}</th>
+                        <th>{{ item.length }}</th>
+                    {% elif table_name == "Position" %}
+                        <th>{{item.longitude}}</th>
+                        <th>{{item.latitude}}</th>
+                        <th>{{item.area}}</th>
+                    {% elif table_name == "Precipitation" %}
+                        <th>{{item.amount}}</th>
+                        <th>{{item.type}}</th>
+                    {% elif table_name == "PrecipitationType" %}
+                        <th>{{item.type}}</th>
+                    {% elif table_name == "Total" %}
+                        <th>{{item.position}}</th>
+                        <th>{{item.precipitation}}</th>
+                        <th>{{item.date}}</th>
+                        <th><form action="/edit/{{item.id}}">
+                                {% csrf_token %}
+                                <input type="submit" value="Edit" />
+                            </form></th>
+                        <th><form method="POST" action="/remove/{{item.id}}">
+                                {% csrf_token %}
+                                <input type="submit" value="Remove" />
+                            </form></th>
+
+                    {% endif %}
+
+
+                </tr>
+            {% endfor %}
+        </table>
+        <form action="/append">  <!-- Поле ввода -->
+            <input type="submit" value="Append">
+        </form>
+</body>
+</html>
